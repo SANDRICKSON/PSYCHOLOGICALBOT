@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dc3545; /* bg-danger color */
+            font-family: 'Arial', sans-serif;
+        }
+        /* Navbar */
+        .navbar {
+            background-color: #dc3545; /* Keep the same color as before (red) */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: white;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.1em;
+            color: white;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #17a2b8; /* Change text color on hover to match your color scheme */
+        }
+        .dropdown-menu {
+            background-color: #dc3545; /* Maintain the red color for dropdown */
+        }
+        .dropdown-item {
+            color: white;
+        }
+        .dropdown-item:hover {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-warning, .btn-success {
+            font-size: 1em;
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+        /* Optional: styling for the buttons */
+        .btn-warning {
+            background-color: #ffc107;
+            color: black;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Psychobot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More/მეტი</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-warning ms-2">English</button>
+                <button type="button" class="btn btn-success ms-2">ქართული</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <!-- About Section -->
+        <h2 class="text-center text-white">About Us/ჩვენ შესახებ</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card text-white bg-danger-subtle mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to Psychobot!</h5>
+                        <p class="card-text">
+                            Psychobot is an innovative platform dedicated to helping individuals improve their mental well-being. Our goal is to provide users with valuable tools and resources that help them understand and manage their emotional and psychological health.
+                        </p>
+                        <p class="card-text">
+                            Through our services, we aim to provide mental health support and promote well-being. Our chatbot offers various psychological advice, guidance, and coping mechanisms to users, all available at their fingertips.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission & Vision Section -->
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Mission & Vision/მისია და ხედვა</h5>
+                        <p>
+                            Our mission is to make mental health support more accessible, affordable, and available to everyone. We believe that psychological wellness is just as important as physical health, and we want to provide everyone with the tools to take care of their mental health.
+                        </p>
+                        <p>
+                            Our vision is to build a community where individuals feel supported in their journey toward better mental health, while also fostering open dialogue about mental health issues.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
