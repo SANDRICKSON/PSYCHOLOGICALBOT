@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Chatbot Section -->
+    <div class="chat-container">
+        <h2 class="chatbot-header">Chat with Psychobot</h2>
+        <div class="chat-box" id="chatBox">
+            <!-- Messages will appear here -->
+            {% for message in texts %}
+                <div class="chat-message {{ message.sender }}">
+                    <p>{{ message.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control message-input" id="userMessage" placeholder="Type a message..." />
+            <button class="btn send-button" id="sendMessage">Send</button>
+        </div>
+    </div>
+
+    <!-- Custom Chatbot JavaScript -->
+    <script>
+        // Chatbot functionality
+        const sendMessageButton = document.getElementById("sendMessage");
+        const messageInput = document.getElementById("userMessage");
+        const chatBox = document.getElementById("chatBox");
+
+        // Function to display messages
+        function displayMessage(message, sender) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message");
+
+            const messageText = document.createElement("p");
+            messageText.textContent = message;
+
+            if (sender === "user") {
+                messageElement.classList.add("user-message");
+            } else {
+                messageElement.classList.add("bot-message");
+            }
+
+            messageElement.appendChild(messageText);
+            chatBox.appendChild(messageElement);
+
+            // Scroll to bottom after new message
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Function to handle sending message
+        function sendMessage() {
+            const userMessage = messageInput.value.trim();
+            if (userMessage) {
+                displayMessage(userMessage, "user");
+                messageInput.value = "";
+
+                // Send message to Flask backend
+                fetch('/send_message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const botMessage = data.response || "Sorry, I didn't understand that.";
+                    displayMessage(botMessage, "bot");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    displayMessage("Sorry, there was an error processing your message.", "bot");
+                });
+            }
+        }
+
+        sendMessageButton.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* General styling */
+    .chat-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .chatbot-header {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .chat-box {
+        height: 400px;
+        overflow-y: auto;
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .chat-message {
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        max-width: 70%;
+        word-wrap: break-word;
+    }
+
+    .user-message {
+        background-color: #4CAF50;
+        color: white;
+        align-self: flex-end;
+    }
+
+    .bot-message {
+        background-color: #e0e0e0;
+        color: #333;
+        align-self: flex-start;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message-input {
+        flex: 1;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .message-input:focus {
+        border-color: #4CAF50;
+    }
+
+    .send-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .send-button:hover {
+        background-color: #45a049;
+    }
+
+    .send-button:active {
+        background-color: #388e3c;
+    }
+</style>
+{% endblock %}

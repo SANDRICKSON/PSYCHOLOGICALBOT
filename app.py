@@ -40,7 +40,10 @@ def chatbot():
 # New route for handling chatbot messages and integrating with Rasa
 @app.route("/send_message", methods=['POST'])
 def send_message():
-    user_message = request.json.get('message')
+    if request.is_json:
+        user_message = request.get_json().get('message')
+    else:
+        return jsonify({"error": "Invalid JSON format"}), 400
 
     if user_message:
         # Send the message to Rasa API with user message

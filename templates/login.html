@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Psychobot</title>
+    <!-- Bootstrap CSS (make sure you're using the latest Bootstrap version) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Make the entire page background color yellow */
+        body {
+            background-color: #ffc107; /* This is the bg-warning color */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(to right, #ff512f, #dd2476); /* Gradient for navbar */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1em;
+        }
+
+        .btn-warning, .btn-success, .btn-primary {
+            font-size: 1em;
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+
+        /* Card styles for login */
+        .card {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            background-color: #ffffff;
+        }
+
+        .alert {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> More/მეტი </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form Section -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Login</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Card with a white background -->
+                <div class="card bg-white text-dark">
+                    <div class="card-body">
+                        <!-- Flash messages for login feedback -->
+                        <div class="alert alert-danger">
+                            Your login attempt was unsuccessful. Please check your credentials.
+                        </div>
+
+                        <!-- Login Form -->
+                        <form action="/login" method="POST">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username/მომხმარებლის სახელი</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username/ჩაწერეთ თქვენი მეილი" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password/პაროლი</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password/ჩაწერეთ თქვენი პაროლი" required>
+                            </div>
+                            <button type="submit" class="btn btn-success", method="post">Login/შესვლა</button>
+                            <a href="/register" class="btn btn-primary">Register/რეგისტრაცია</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (make sure to use the latest version) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

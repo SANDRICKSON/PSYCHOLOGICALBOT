@@ -3,5 +3,4 @@ Flask-WTF
 Flask-SQLAlchemy
 Flask-login
 email_validator
-requests
 gunicorn
