@@ -1,16 +1,182 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - Psychobot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Chatbot styling */
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            font-family: 'Arial', sans-serif;
+        }
 
-{% block content %}
+        .chat-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f1f1f1;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: scroll;
+            border: none;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
+        .bot-message {
+            text-align: left;
+        }
+
+        .input-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .message-input {
+            border-radius: 30px;
+            border: 2px solid #ddd;
+            padding: 12px 20px;
+            width: 80%;
+            margin-right: 10px;
+            font-size: 16px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .send-button {
+            border-radius: 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .chatbot-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .chat-message p {
+            border-radius: 20px;
+            padding: 12px;
+            max-width: 65%;
+            display: inline-block;
+        }
+
+        .user-message p {
+            background-color: #f1f1f1;
+            color: #333;
+            border-radius: 20px 20px 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .bot-message p {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 20px 20px 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smooth transition for message appearance */
+        .chat-message {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(to right, #ff512f, #dd2476); /* Gradient for navbar */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1em;
+        }
+
+        .btn-warning, .btn-success {
+            font-size: 1em;
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> More/მეტი </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-warning ms-2" id="lang-en">English</button>
+                <button type="button" class="btn btn-success ms-2" id="lang-ge">ქართული</button>
+            </div>
+        </div>
+    </nav>
+
     <!-- Chatbot Section -->
     <div class="chat-container">
         <h2 class="chatbot-header">Chat with Psychobot</h2>
         <div class="chat-box" id="chatBox">
             <!-- Messages will appear here -->
-            {% for message in texts %}
-                <div class="chat-message {{ message.sender }}">
-                    <p>{{ message.text }}</p>
-                </div>
-            {% endfor %}
         </div>
         <div class="input-group">
             <input type="text" class="form-control message-input" id="userMessage" placeholder="Type a message..." />
@@ -18,7 +184,8 @@
         </div>
     </div>
 
-    <!-- Custom Chatbot JavaScript -->
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Chatbot functionality
         const sendMessageButton = document.getElementById("sendMessage");
@@ -53,23 +220,21 @@
                 displayMessage(userMessage, "user");
                 messageInput.value = "";
 
-                // Send message to Flask backend
-                fetch('/send_message', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: userMessage }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const botMessage = data.response || "Sorry, I didn't understand that.";
+                // Bot responses based on user input
+                let botMessage = "";
+                if (userMessage.toLowerCase() === "გამარჯობა") {
+                    botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
+                } else if (userMessage.toLowerCase() === "მადლობა") {
+                    botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
+                } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
+            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას. იგი მოიცავს ისეთ სფეროებს, როგორიცაა კოგნიტური ფსიქოლოგია (რომელიც მიმართულია აზროვნებისა და მახსოვრობის პროცედურების შესწავლაზე), სოციალურ ფსიქოლოგია (რომელიც სწავლობს ადამიანის ქცევის სოციალურად обусловებულ ასპექტებს), კლინიკური ფსიქოლოგია (რომელიც დარეგულირებს ფსიქიკურ დარღვევებს და მიდგომებს მათთან), ფსიქოლოგიური თეორიები, მეთოდები და კვლევის ტექნიკები. ფსიქოლოგია ეხმარება ადამიანებს უკეთ გაიგონ საკუთარ თავს და სხვებს, ხანდახან ის გამოიყენება სხვადასხვა პროფესიულ სფეროებში, მაგალითად, განათლებაში, ბიზნესში და ჯანმრთელობაში.";
+        }         else {
+                    botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს თუმცა გპირდებით რომ მალე გიპასუხებთ ❤️!";
+                }
+
+                setTimeout(() => {
                     displayMessage(botMessage, "bot");
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    displayMessage("Sorry, there was an error processing your message.", "bot");
-                });
+                }, 1000);
             }
         }
 
@@ -80,118 +245,5 @@
             }
         });
     </script>
-{% endblock %}
-
-{% block styles %}
-<style>
-    @media (max-width: 768px) {
-    #faq-title {
-        font-size: 1.5rem;
-    }
-
-    .carousel-caption h5 {
-        font-size: 1.25rem;
-    }
-
-    .carousel-caption p {
-        font-size: 1rem;
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-    }
-}
-
-    /* General styling */
-    .chat-container {
-        width: 100%;
-        max-width: 600px;
-        margin: 20px auto;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    .chatbot-header {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 15px;
-        color: #333;
-        font-family: 'Arial', sans-serif;
-    }
-
-    .chat-box {
-        height: 400px;
-        overflow-y: auto;
-        background-color: #f4f4f4;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .chat-message {
-        padding: 10px;
-        border-radius: 8px;
-        font-size: 14px;
-        max-width: 70%;
-        word-wrap: break-word;
-    }
-
-    .user-message {
-        background-color: #4CAF50;
-        color: white;
-        align-self: flex-end;
-    }
-
-    .bot-message {
-        background-color: #e0e0e0;
-        color: #333;
-        align-self: flex-start;
-    }
-
-    .input-group {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .message-input {
-        flex: 1;
-        padding: 10px;
-        font-size: 14px;
-        border-radius: 25px;
-        border: 1px solid #ccc;
-        outline: none;
-        transition: border-color 0.3s;
-    }
-
-    .message-input:focus {
-        border-color: #4CAF50;
-    }
-
-    .send-button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: background-color 0.3s;
-    }
-
-    .send-button:hover {
-        background-color: #45a049;
-    }
-
-    .send-button:active {
-        background-color: #388e3c;
-    }
-</style>
-{% endblock %}
-
+</body>
+</html>
