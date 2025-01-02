@@ -214,37 +214,46 @@
         }
 
         // Function to handle sending message
-        function sendMessage() {
-            const userMessage = messageInput.value.trim();
-            if (userMessage) {
-                displayMessage(userMessage, "user");
-                messageInput.value = "";
+       function sendMessage() {
+    const userMessage = messageInput.value.trim();
+    if (userMessage) {
+        displayMessage(userMessage, "user");
+        messageInput.value = "";
 
-                // Bot responses based on user input
-                let botMessage = "";
-                if (userMessage.toLowerCase() === "გამარჯობა") {
-                    botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
-                } else if (userMessage.toLowerCase() === "მადლობა") {
-                    botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
-                } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
-            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას. იგი მოიცავს ისეთ სფეროებს, როგორიცაა კოგნიტური ფსიქოლოგია (რომელიც მიმართულია აზროვნებისა და მახსოვრობის პროცედურების შესწავლაზე), სოციალურ ფსიქოლოგია (რომელიც სწავლობს ადამიანის ქცევის სოციალურად обусловებულ ასპექტებს), კლინიკური ფსიქოლოგია (რომელიც დარეგულირებს ფსიქიკურ დარღვევებს და მიდგომებს მათთან), ფსიქოლოგიური თეორიები, მეთოდები და კვლევის ტექნიკები. ფსიქოლოგია ეხმარება ადამიანებს უკეთ გაიგონ საკუთარ თავს და სხვებს, ხანდახან ის გამოიყენება სხვადასხვა პროფესიულ სფეროებში, მაგალითად, განათლებაში, ბიზნესში და ჯანმრთელობაში.";
-        }          else if (userMessage.toLowerCase() === "hi"){
-        botMessage = "Hi, how can i assist you?";}
-        else if (userMessage.toLowerCase() === "thank you"){
-        botMessage = "You are welcome!  It's very big honour for me to help you ❤️";}
-        else if (userMessage.toLowerCase() === "goodbye"){
-        botMessage = "Bye see you soon ❤️";}
-        else if (userMessage.toLowerCase() === "ნახვამდის"){
-        botMessage = "ნახვამდის მომავალ შეხვედრამდე❤️";}
-         else {
-                    botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს თუმცა გპირდებით რომ მალე გიპასუხებთ ❤️!";
-                }
-
-                setTimeout(() => {
-                    displayMessage(botMessage, "bot");
-                }, 1000);
-            }
+        // Bot responses based on user input
+        let botMessage = "";
+        if (userMessage.toLowerCase() === "გამარჯობა") {
+            botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
+        } else if (userMessage.toLowerCase() === "მადლობა") {
+            botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
+        } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
+            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
+        } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
+            botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
+        } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
+            botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
+        } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
+            botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
+        } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
+            botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
+        } else if (userMessage.toLowerCase() === "hi") {
+            botMessage = "Hi, how can I assist you?";
+        } else if (userMessage.toLowerCase() === "thank you") {
+            botMessage = "You are welcome! It's very big honour for me to help you ❤️";
+        } else if (userMessage.toLowerCase() === "goodbye") {
+            botMessage = "Bye, see you soon ❤️";
+        } else if (userMessage.toLowerCase() === "ნახვამდის") {
+            botMessage = "ნახვამდის, მომავალ შეხვედრამდე ❤️";
+        } else {
+            botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
         }
+
+        setTimeout(() => {
+            displayMessage(botMessage, "bot");
+        }, 1000);
+    }
+}
+
 
         sendMessageButton.addEventListener("click", sendMessage);
         messageInput.addEventListener("keypress", function(event) {
