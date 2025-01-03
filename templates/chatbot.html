@@ -222,7 +222,7 @@
 
         // Bot responses based on user input
         let botMessage = "";
-if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "დილა მშვიდობის") {
+        if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
     botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
 } else if (userMessage.toLowerCase() === "მადლობა") {
     botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
@@ -256,7 +256,7 @@ if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.t
     botMessage = "Hi, how can I assist you?";
 } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
     botMessage = "You are welcome! It's very big honour for me to help you ❤️";
-} else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you") {
+} else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
     botMessage = "Bye, see you soon ❤️";
 } else if (userMessage.toLowerCase() === "what is psychology?") {
     botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
@@ -281,6 +281,7 @@ if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.t
 } else {
     botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
 }
+
 
 
         setTimeout(() => {
