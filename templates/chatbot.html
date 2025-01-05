@@ -153,6 +153,20 @@
             color: #007bff;
         }
 
+
+        .bot-message {
+    display: flex;
+    align-items: center;
+}
+
+.bot-image {
+    width: 40px; /* Adjust size */
+    height: 40px;
+    border-radius: 50%; /* This makes the image circular */
+    margin-right: 10px; /* Space between image and message */
+}
+
+
     </style>
 </head>
 <body>
@@ -208,64 +222,162 @@
     </div>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script><script>
-    // Chatbot functionality
-    const sendMessageButton = document.getElementById("sendMessage");
-    const messageInput = document.getElementById("userMessage");
-    const chatBox = document.getElementById("chatBox");
-    const emojiButton = document.getElementById("emojiButton");
-    const emojiPicker = document.getElementById("emojiPicker");
-    const clearChatButton = document.getElementById("clearChatButton");
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+// Chatbot functionality
+const sendMessageButton = document.getElementById("sendMessage");
+const messageInput = document.getElementById("userMessage");
+const chatBox = document.getElementById("chatBox");
+const emojiButton = document.getElementById("emojiButton");
+const emojiPicker = document.getElementById("emojiPicker");
+const clearChatButton = document.getElementById("clearChatButton");
 
-    // Function to display messages
-    function displayMessage(message, sender) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message");
+// Function to display messages
+function displayMessage(message, sender) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("chat-message");
 
-        const messageText = document.createElement("p");
-        messageText.textContent = message;
+    const messageText = document.createElement("p");
+    messageText.textContent = message;
 
-        const messageTime = document.createElement("span");
-        messageTime.classList.add("message-time");
-        messageTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); // Fixed time format
+    const messageTime = document.createElement("span");
+    messageTime.classList.add("message-time");
+    messageTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); // Fixed time format
 
-        if (sender === "user") {
-            messageElement.classList.add("user-message");
+    if (sender === "user") {
+        messageElement.classList.add("user-message");
+    } else {
+        messageElement.classList.add("bot-message");
+
+        // Create and add bot's image
+        const botImage = document.createElement("img");
+        botImage.src = "/static/eqimis surati.jpeg"; // Replace with the path to your image
+        botImage.alt = "Bot Image";
+        botImage.classList.add("bot-image");
+
+        // Append the image next to the message
+        messageElement.appendChild(botImage);
+    }
+
+    messageElement.appendChild(messageText);
+    messageElement.appendChild(messageTime);
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+}
+
+// Function to save chat history to localStorage
+function saveChatHistory() {
+    const messages = [];
+    const messageElements = chatBox.getElementsByClassName("chat-message");
+    for (const messageElement of messageElements) {
+        const messageText = messageElement.querySelector("p").textContent;
+        messages.push(messageText);
+    }
+    localStorage.setItem("chatHistory", JSON.stringify(messages));
+}
+
+// Function to load chat history from localStorage
+function loadChatHistory() {
+    const storedHistory = localStorage.getItem("chatHistory");
+    if (storedHistory) {
+        const messages = JSON.parse(storedHistory);
+        messages.forEach((message, index) => {
+            const sender = index % 2 === 0 ? "user" : "bot"; // Alternate user and bot messages
+            displayMessage(message, sender);
+        });
+    }
+}
+
+// Send message on button click
+sendMessageButton.addEventListener("click", function() {
+    const userMessage = messageInput.value.trim();
+    if (userMessage !== "") {
+        // Check if message exceeds 1000 characters
+        if (userMessage.length > 1000) {
+            alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
+            return; // Prevent sending the message
+        }
+
+        displayMessage(userMessage, "user");
+        messageInput.value = "";
+        saveChatHistory(); // Save chat history
+
+        // Add your message handling logic here
+        let botMessage = "";  // Initialize botMessage
+        if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
+            botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
+        } else if (userMessage.toLowerCase() === "მადლობა") {
+            botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
+        } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
+            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
+        } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
+            botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
+        } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
+            botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
+        } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
+            botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
+        } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
+            botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
+        } else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
+            botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
+        } else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
+            botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
+        } else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
+            botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
+        } else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
+            botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
+        } else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
+            botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
+        } else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
+            botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
+        } else if (userMessage.toLowerCase() === "ნახვამდის") {
+            botMessage = "დროებით ❤️❤️❤️❤️❤️";
+        } else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
+            botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
+        } else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
+            botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
+        } else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
+            botMessage = "Hi, how can I assist you?";
+        } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
+            botMessage = "You are welcome! It's very big honour for me to help you ❤️";
+        } else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
+            botMessage = "Bye, see you soon ❤️";
+        } else if (userMessage.toLowerCase() === "what is psychology?") {
+            botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
+        } else if (userMessage.toLowerCase() === "what is stress?") {
+            botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
+        } else if (userMessage.toLowerCase() === "how to avoid stress?") {
+            botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
+        } else if (userMessage.toLowerCase() === "how to improve my emotional state?") {
+            botMessage = "Meditation, positive thinking, spending time on hobbies, and consulting a professional if needed can help.";
+        } else if (userMessage.toLowerCase() === "what is self-esteem?") {
+            botMessage = "Self-esteem is how one perceives their own value and worth.";
+        } else if (userMessage.toLowerCase() === "what is depression?") {
+            botMessage = "Depression is an emotional state that involves long-lasting sadness, hopelessness, and a lack of energy.";
+        } else if (userMessage.toLowerCase() === "how to cope with depression?") {
+            botMessage = "To cope with depression, physical activity, meditation, positive social interaction, and therapy can be helpful.";
+        } else if (userMessage.toLowerCase() === "what is suicide?") {
+            botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
+        } else if (userMessage.toLowerCase() === "what is empathy?") {
+            botMessage = "Empathy is the ability to understand and share the feelings of another person.";
+        } else if (userMessage.match(/[ა-ჰ]/)) { // Checks if the message is in Georgian
+            botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
         } else {
-            messageElement.classList.add("bot-message");
+            botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
         }
 
-        messageElement.appendChild(messageText);
-        messageElement.appendChild(messageTime);
-        chatBox.appendChild(messageElement);
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        // Simulate bot response with a delay
+        setTimeout(() => {
+            displayMessage(botMessage, "bot");
+            saveChatHistory();  // Save chat history after bot response
+        }, 500);
     }
+});
 
-    // Function to save chat history to localStorage
-    function saveChatHistory() {
-        const messages = [];
-        const messageElements = chatBox.getElementsByClassName("chat-message");
-        for (const messageElement of messageElements) {
-            const messageText = messageElement.querySelector("p").textContent;
-            messages.push(messageText);
-        }
-        localStorage.setItem("chatHistory", JSON.stringify(messages));
-    }
-
-    // Function to load chat history from localStorage
-    function loadChatHistory() {
-        const storedHistory = localStorage.getItem("chatHistory");
-        if (storedHistory) {
-            const messages = JSON.parse(storedHistory);
-            messages.forEach((message, index) => {
-                const sender = index % 2 === 0 ? "user" : "bot"; // Alternate user and bot messages
-                displayMessage(message, sender);
-            });
-        }
-    }
-
-    // Send message on button click
-    sendMessageButton.addEventListener("click", function() {
+// Send message on Enter key press
+messageInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) { // Check if Enter key is pressed, without Shift (for multiline input)
+        event.preventDefault(); // Prevent default Enter behavior (new line in textarea)
         const userMessage = messageInput.value.trim();
         if (userMessage !== "") {
             // Check if message exceeds 1000 characters
@@ -279,130 +391,99 @@
             saveChatHistory(); // Save chat history
 
             // Add your message handling logic here
-            let botMessage = "";  // Initialize botMessage
-            if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
-                botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
-            } else if (userMessage.toLowerCase() === "მადლობა") {
-                botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
-            } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
-                botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
-            } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
-                botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
-            } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
-                botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
-            } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
-                botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
-            } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
-                botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
-            } else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
-                botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
-            } else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
-                botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
-            } else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
-                botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
-            } else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
-                botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
-            } else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
-                botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
-            } else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
-                botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
-            } else if (userMessage.toLowerCase() === "ნახვამდის") {
-                botMessage = "დროებით ❤️❤️❤️❤️❤️";
-            } else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
-                botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
-            } else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
-                botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
-            } else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
-                botMessage = "Hi, how can I assist you?";
-            } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
-                botMessage = "You are welcome! It's very big honour for me to help you ❤️";
-            } else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
-                botMessage = "Bye, see you soon ❤️";
-            } else if (userMessage.toLowerCase() === "what is psychology?") {
-                botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
-            } else if (userMessage.toLowerCase() === "what is stress?") {
-                botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
-            } else if (userMessage.toLowerCase() === "how to avoid stress?") {
-                botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
-            } else if (userMessage.toLowerCase() === "how to improve my emotional state?") {
-                botMessage = "Meditation, positive thinking, spending time on hobbies, and consulting a professional if needed can help.";
-            } else if (userMessage.toLowerCase() === "what is self-esteem?") {
-                botMessage = "Self-esteem is how one perceives their own value and worth.";
-            } else if (userMessage.toLowerCase() === "what is depression?") {
-                botMessage = "Depression is an emotional state that involves long-lasting sadness, hopelessness, and a lack of energy.";
-            } else if (userMessage.toLowerCase() === "how to cope with depression?") {
-                botMessage = "To cope with depression, physical activity, meditation, positive social interaction, and therapy can be helpful.";
-            } else if (userMessage.toLowerCase() === "what is suicide?") {
-                botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
-            } else if (userMessage.toLowerCase() === "what is empathy?") {
-                botMessage = "Empathy is the ability to understand and share the feelings of another person.";
-            } else if (userMessage.match(/[ა-ჰ]/)) { // Checks if the message is in Georgian
-                botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
-            } else {
-                botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
-            }
-
-            // Simulate bot response with a delay
-            setTimeout(() => {
-                displayMessage(botMessage, "bot");
-                saveChatHistory();  // Save chat history after bot response
-            }, 500);
+             let botMessage = "";  // Initialize botMessage
+        if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
+            botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
+        } else if (userMessage.toLowerCase() === "მადლობა") {
+            botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
+        } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
+            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
+        } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
+            botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
+        } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
+            botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
+        } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
+            botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
+        } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
+            botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
+        } else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
+            botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
+        } else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
+            botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
+        } else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
+            botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
+        } else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
+            botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
+        } else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
+            botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
+        } else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
+            botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
+        } else if (userMessage.toLowerCase() === "ნახვამდის") {
+            botMessage = "დროებით ❤️❤️❤️❤️❤️";
+        } else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
+            botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
+        } else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
+            botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
+        } else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
+            botMessage = "Hi, how can I assist you?";
+        } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
+            botMessage = "You are welcome! It's very big honour for me to help you ❤️";
+        } else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
+            botMessage = "Bye, see you soon ❤️";
+        } else if (userMessage.toLowerCase() === "what is psychology?") {
+            botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
+        } else if (userMessage.toLowerCase() === "what is stress?") {
+            botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
+        } else if (userMessage.toLowerCase() === "how to avoid stress?") {
+            botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
+        } else if (userMessage.toLowerCase() === "how to improve my emotional state?") {
+            botMessage = "Meditation, positive thinking, spending time on hobbies, and consulting a professional if needed can help.";
+        } else if (userMessage.toLowerCase() === "what is self-esteem?") {
+            botMessage = "Self-esteem is how one perceives their own value and worth.";
+        } else if (userMessage.toLowerCase() === "what is depression?") {
+            botMessage = "Depression is an emotional state that involves long-lasting sadness, hopelessness, and a lack of energy.";
+        } else if (userMessage.toLowerCase() === "how to cope with depression?") {
+            botMessage = "To cope with depression, physical activity, meditation, positive social interaction, and therapy can be helpful.";
+        } else if (userMessage.toLowerCase() === "what is suicide?") {
+            botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
+        } else if (userMessage.toLowerCase() === "what is empathy?") {
+            botMessage = "Empathy is the ability to understand and share the feelings of another person.";
+        } else if (userMessage.match(/[ა-ჰ]/)) { // Checks if the message is in Georgian
+            botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
+        } else {
+            botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
         }
-    });
 
-    // Send message on Enter key press
-    messageInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter" && !event.shiftKey) { // Check if Enter key is pressed, without Shift (for multiline input)
-            event.preventDefault(); // Prevent default Enter behavior (new line in textarea)
-            const userMessage = messageInput.value.trim();
-            if (userMessage !== "") {
-                // Check if message exceeds 1000 characters
-                if (userMessage.length > 1000) {
-                    alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
-                    return; // Prevent sending the message
-                }
-
-                displayMessage(userMessage, "user");
-                messageInput.value = "";
-                saveChatHistory(); // Save chat history
-
-                // Add your message handling logic here
-                let botMessage = "";  // Initialize botMessage
-                if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
-                    botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
-                } else {
-                    botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
-                }
-
-                // Simulate bot response with a delay
-                setTimeout(() => {
-                    displayMessage(botMessage, "bot");
-                    saveChatHistory();  // Save chat history after bot response
-                }, 500);
-            }
+        // Simulate bot response with a delay
+        setTimeout(() => {
+            displayMessage(botMessage, "bot");
+            saveChatHistory();  // Save chat history after bot response
+        }, 500);
         }
-    });
-
-    // Handle emoji button click
-    emojiButton.addEventListener("click", () => {
-        emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
-    });
-
-    // Add emoji to the input box
-    function addEmoji(emoji) {
-        messageInput.value += emoji;
-        emojiPicker.style.display = "none";
     }
+});
 
-    // Clear chat history
-    clearChatButton.addEventListener("click", () => {
-        localStorage.removeItem("chatHistory");
-        chatBox.innerHTML = "";
-    });
+// Handle emoji button click
+emojiButton.addEventListener("click", () => {
+    emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
+});
 
-    // Load chat history when page loads
-    window.addEventListener("load", loadChatHistory);
+// Add emoji to the input box
+function addEmoji(emoji) {
+    messageInput.value += emoji;
+    emojiPicker.style.display = "none";
+}
+
+// Clear chat history
+clearChatButton.addEventListener("click", () => {
+    localStorage.removeItem("chatHistory");
+    chatBox.innerHTML = "";
+});
+
+// Load chat history when page loads
+window.addEventListener("load", loadChatHistory);
 </script>
+
 
 
 
