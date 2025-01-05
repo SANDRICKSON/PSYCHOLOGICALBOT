@@ -268,6 +268,12 @@
     sendMessageButton.addEventListener("click", function() {
         const userMessage = messageInput.value.trim();
         if (userMessage !== "") {
+            // Check if message exceeds 1000 characters
+            if (userMessage.length > 1000) {
+                alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
+                return; // Prevent sending the message
+            }
+
             displayMessage(userMessage, "user");
             messageInput.value = "";
             saveChatHistory(); // Save chat history
@@ -350,6 +356,12 @@
             event.preventDefault(); // Prevent default Enter behavior (new line in textarea)
             const userMessage = messageInput.value.trim();
             if (userMessage !== "") {
+                // Check if message exceeds 1000 characters
+                if (userMessage.length > 1000) {
+                    alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
+                    return; // Prevent sending the message
+                }
+
                 displayMessage(userMessage, "user");
                 messageInput.value = "";
                 saveChatHistory(); // Save chat history
@@ -391,6 +403,7 @@
     // Load chat history when page loads
     window.addEventListener("load", loadChatHistory);
 </script>
+
 
 
 </body>
