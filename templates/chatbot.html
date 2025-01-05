@@ -380,8 +380,29 @@ downloadChatButton.addEventListener('click', function() {
     link.download = 'chat_history.txt';
     link.click();
 });
+function getGreeting() {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 6 && currentHour < 12) {
+        return "დილა მშვიდობისა, რამე ხომ არ გჭირდებათ?"; // Good morning
+    } else if (currentHour >= 12 && currentHour < 18) {
+        return "დღე მშვიდობის, რამე ხომ არ გჭირდებათ?"; // Good afternoon
+    } else if (currentHour >= 18 || currentHour < 6) {
+        return "საღამო მშვიდობის, რამე ხომ არ გჭირდება?"; // Good evening
+    }
+}
+
+// Display greeting when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    const greetingMessage = getGreeting();
+    displayMessage(greetingMessage, "bot");
+});
+
 
 loadChatHistory();
+
+
+
 </script>
 </body>
 </html>
