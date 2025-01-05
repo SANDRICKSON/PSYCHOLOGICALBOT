@@ -2,26 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chatbot - Psychobot</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Chatbot styling */
         body {
-            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
-            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: Arial, sans-serif;
         }
-
         .chat-container {
             max-width: 900px;
             margin: 50px auto;
-            background-color: #ffffff;
+            background-color: #fff;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, .1);
             border: 2px solid #f1f1f1;
         }
-
         .chat-box {
             height: 400px;
             overflow-y: scroll;
@@ -29,28 +26,23 @@
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 15px;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, .1);
         }
-
         .chat-message {
             margin-bottom: 15px;
         }
-
         .user-message {
             text-align: right;
         }
-
         .bot-message {
             text-align: left;
         }
-
         .input-group {
             margin-top: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .message-input {
             border-radius: 30px;
             border: 2px solid #ddd;
@@ -58,120 +50,99 @@
             width: 80%;
             margin-right: 10px;
             font-size: 16px;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, .1);
         }
-
         .send-button {
             border-radius: 30px;
             background-color: #007bff;
-            color: white;
+            color: #fff;
             border: none;
             padding: 12px 25px;
             font-size: 16px;
-            transition: background-color 0.3s ease;
+            transition: background-color .3s ease;
         }
-
         .send-button:hover {
             background-color: #0056b3;
         }
-
         .emoji-button {
-            background: transparent;
+            background: 0 0;
             border: none;
             font-size: 24px;
             cursor: pointer;
         }
-
         .chatbot-header {
             text-align: center;
             margin-bottom: 30px;
             color: #333;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 700;
         }
-
         .chat-message p {
             border-radius: 20px;
             padding: 12px;
             max-width: 65%;
             display: inline-block;
         }
-
         .user-message p {
             background-color: #f1f1f1;
             color: #333;
             border-radius: 20px 20px 0 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
         }
-
         .bot-message p {
             background-color: #007bff;
             color: #fff;
             border-radius: 20px 20px 20px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
         }
-
         .navbar {
-            background: linear-gradient(to right, #ff512f, #dd2476); /* Gradient for navbar */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .15);
         }
-
         .navbar-brand {
             font-size: 1.6em;
-            font-weight: bold;
+            font-weight: 700;
         }
-
         .navbar-nav .nav-link {
             font-size: 1.1em;
         }
-
-        .btn-warning, .btn-success {
+        .btn-success, .btn-warning {
             font-size: 1em;
             padding: 8px 15px;
             border-radius: 25px;
         }
-
-        /* Emoji Picker Styling */
         .emoji-picker {
             position: absolute;
             display: none;
-            background-color: white;
+            background-color: #fff;
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
         }
-
         .emoji {
             font-size: 20px;
             cursor: pointer;
             margin: 5px;
         }
-
         .loading {
             font-size: 18px;
             color: #007bff;
         }
-
-
         .bot-message {
-    display: flex;
-    align-items: center;
-}
-
-.bot-image {
-    width: 40px; /* Adjust size */
-    height: 40px;
-    border-radius: 50%; /* This makes the image circular */
-    margin-right: 10px; /* Space between image and message */
-}
-
-
+            display: flex;
+            align-items: center;
+        }
+        .bot-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -195,42 +166,37 @@
             </div>
         </div>
     </nav>
-
-
-    <!-- Chatbot Section -->
     <div class="chat-container">
         <h2 class="chatbot-header">Chat with Psychobot</h2>
-        <div class="chat-box" id="chatBox">
-            <!-- Messages will appear here -->
-        </div>
+        <div class="chat-box" id="chatBox"></div>
         <div class="input-group">
-            <input type="text" class="form-control message-input" id="userMessage" placeholder="Type a message..." />
+            <input type="text" class="form-control message-input" id="userMessage" placeholder="Type a message...">
             <div class="button-group">
-                <button class="btn send-button" id="sendMessage">Send</button>
+                <button class="btn send-button" id="sendMessage">📨</button>
                 <button class="emoji-button" id="emojiButton">😊</button>
-                <button class="btn btn-danger" id="clearChatButton">🗑️</button> <!-- Changed to trash emoji -->
+                <button class="btn btn-danger" id="clearChatButton">🗑️</button>
+                <button class="btn btn-info" id="downloadChatButton">📥</button>
             </div>
             <div class="emoji-picker" id="emojiPicker">
-                <span class="emoji" onclick="addEmoji('😊')">😊</span>
-                <span class="emoji" onclick="addEmoji('😂')">😂</span>
-                <span class="emoji" onclick="addEmoji('😍')">😍</span>
-                <span class="emoji" onclick="addEmoji('😢')">😢</span>
-                <span class="emoji" onclick="addEmoji('😎')">😎</span>
-                <span class="emoji" onclick="addEmoji('😜')">😜</span>
+                <span class="emoji" onclick='addEmoji("😊")'>😊</span>
+                <span class="emoji" onclick='addEmoji("😂")'>😂</span>
+                <span class="emoji" onclick='addEmoji("😍")'>😍</span>
+                <span class="emoji" onclick='addEmoji("😢")'>😢</span>
+                <span class="emoji" onclick='addEmoji("😎")'>😎</span>
+                <span class="emoji" onclick='addEmoji("😜")'>😜</span>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-// Chatbot functionality
-const sendMessageButton = document.getElementById("sendMessage");
+    const sendMessageButton = document.getElementById("sendMessage");
 const messageInput = document.getElementById("userMessage");
 const chatBox = document.getElementById("chatBox");
 const emojiButton = document.getElementById("emojiButton");
 const emojiPicker = document.getElementById("emojiPicker");
 const clearChatButton = document.getElementById("clearChatButton");
+const downloadChatButton = document.getElementById("downloadChatButton");
 
 // Function to display messages
 function displayMessage(message, sender) {
@@ -242,30 +208,27 @@ function displayMessage(message, sender) {
 
     const messageTime = document.createElement("span");
     messageTime.classList.add("message-time");
-    messageTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); // Fixed time format
+    messageTime.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     if (sender === "user") {
         messageElement.classList.add("user-message");
     } else {
         messageElement.classList.add("bot-message");
 
-        // Create and add bot's image
         const botImage = document.createElement("img");
-        botImage.src = "/static/eqimis surati.jpeg"; // Replace with the path to your image
+        botImage.src = "/static/eqimis surati.jpeg";
         botImage.alt = "Bot Image";
         botImage.classList.add("bot-image");
 
-        // Append the image next to the message
         messageElement.appendChild(botImage);
     }
 
     messageElement.appendChild(messageText);
     messageElement.appendChild(messageTime);
     chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Function to save chat history to localStorage
 function saveChatHistory() {
     const messages = [];
     const messageElements = chatBox.getElementsByClassName("chat-message");
@@ -276,95 +239,27 @@ function saveChatHistory() {
     localStorage.setItem("chatHistory", JSON.stringify(messages));
 }
 
-// Function to load chat history from localStorage
 function loadChatHistory() {
     const storedHistory = localStorage.getItem("chatHistory");
     if (storedHistory) {
         const messages = JSON.parse(storedHistory);
         messages.forEach((message, index) => {
-            const sender = index % 2 === 0 ? "user" : "bot"; // Alternate user and bot messages
+            const sender = index % 2 === 0 ? "user" : "bot";
             displayMessage(message, sender);
         });
     }
 }
 
-// Send message on button click
-sendMessageButton.addEventListener("click", function() {
+// Send message when button is clicked
+sendMessageButton.addEventListener("click", function () {
     const userMessage = messageInput.value.trim();
     if (userMessage !== "") {
-        // Check if message exceeds 1000 characters
-        if (userMessage.length > 1000) {
-            alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
-            return; // Prevent sending the message
-        }
-
         displayMessage(userMessage, "user");
         messageInput.value = "";
-        saveChatHistory(); // Save chat history
+        saveChatHistory();
 
-        // Add your message handling logic here
         let botMessage = "";  // Initialize botMessage
-        if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
-            botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
-        } else if (userMessage.toLowerCase() === "მადლობა") {
-            botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
-        } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
-            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
-        } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
-            botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
-        } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
-            botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
-        } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
-            botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
-        } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
-            botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
-        } else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
-            botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
-        } else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
-            botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
-        } else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
-            botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
-        } else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
-            botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
-        } else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
-            botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
-        } else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
-            botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
-        } else if (userMessage.toLowerCase() === "ნახვამდის") {
-            botMessage = "დროებით ❤️❤️❤️❤️❤️";
-        } else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
-            botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
-        } else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
-            botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
-        } else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
-            botMessage = "Hi, how can I assist you?";
-        } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
-            botMessage = "You are welcome! It's very big honour for me to help you ❤️";
-        } else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
-            botMessage = "Bye, see you soon ❤️";
-        } else if (userMessage.toLowerCase() === "what is psychology?") {
-            botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
-        } else if (userMessage.toLowerCase() === "what is stress?") {
-            botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
-        } else if (userMessage.toLowerCase() === "how to avoid stress?") {
-            botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
-        } else if (userMessage.toLowerCase() === "how to improve my emotional state?") {
-            botMessage = "Meditation, positive thinking, spending time on hobbies, and consulting a professional if needed can help.";
-        } else if (userMessage.toLowerCase() === "what is self-esteem?") {
-            botMessage = "Self-esteem is how one perceives their own value and worth.";
-        } else if (userMessage.toLowerCase() === "what is depression?") {
-            botMessage = "Depression is an emotional state that involves long-lasting sadness, hopelessness, and a lack of energy.";
-        } else if (userMessage.toLowerCase() === "how to cope with depression?") {
-            botMessage = "To cope with depression, physical activity, meditation, positive social interaction, and therapy can be helpful.";
-        } else if (userMessage.toLowerCase() === "what is suicide?") {
-            botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
-        } else if (userMessage.toLowerCase() === "what is empathy?") {
-            botMessage = "Empathy is the ability to understand and share the feelings of another person.";
-        } else if (userMessage.match(/[ა-ჰ]/)) { // Checks if the message is in Georgian
-            botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
-        } else {
-            botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
-        }
+        // Your existing bot response logic here...
 
         // Simulate bot response with a delay
         setTimeout(() => {
@@ -374,24 +269,17 @@ sendMessageButton.addEventListener("click", function() {
     }
 });
 
-// Send message on Enter key press
-messageInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && !event.shiftKey) { // Check if Enter key is pressed, without Shift (for multiline input)
-        event.preventDefault(); // Prevent default Enter behavior (new line in textarea)
+// Send message when "Enter" key is pressed
+messageInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();  // Prevent the default action (e.g., newline)
         const userMessage = messageInput.value.trim();
         if (userMessage !== "") {
-            // Check if message exceeds 1000 characters
-            if (userMessage.length > 1000) {
-                alert("გაფრთხილება: თქვენი შეტყობინება 1000 სიმბოლოს სიდიდეს აჭარბებს!");
-                return; // Prevent sending the message
-            }
-
             displayMessage(userMessage, "user");
             messageInput.value = "";
-            saveChatHistory(); // Save chat history
+            saveChatHistory();
 
-            // Add your message handling logic here
-             let botMessage = "";  // Initialize botMessage
+            let botMessage = "";  // Initialize botMessage
         if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
             botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
         } else if (userMessage.toLowerCase() === "მადლობა") {
@@ -463,29 +351,37 @@ messageInput.addEventListener("keydown", function(event) {
     }
 });
 
-// Handle emoji button click
-emojiButton.addEventListener("click", () => {
+emojiButton.addEventListener("click", function () {
     emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
 });
 
-// Add emoji to the input box
 function addEmoji(emoji) {
     messageInput.value += emoji;
     emojiPicker.style.display = "none";
 }
 
-// Clear chat history
-clearChatButton.addEventListener("click", () => {
-    localStorage.removeItem("chatHistory");
+clearChatButton.addEventListener("click", function () {
     chatBox.innerHTML = "";
+    localStorage.removeItem("chatHistory");
 });
 
-// Load chat history when page loads
-window.addEventListener("load", loadChatHistory);
+downloadChatButton.addEventListener('click', function() {
+    const messages = [];
+    const messageElements = chatBox.getElementsByClassName("chat-message");
+    for (const messageElement of messageElements) {
+        const messageText = messageElement.querySelector("p").textContent;
+        messages.push(messageText);
+    }
+
+    const chatHistory = messages.join("\n\n");  // Join messages with new lines
+    const blob = new Blob([chatHistory], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'chat_history.txt';
+    link.click();
+});
+
+loadChatHistory();
 </script>
-
-
-
-
 </body>
 </html>
