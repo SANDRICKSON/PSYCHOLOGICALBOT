@@ -82,31 +82,39 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Psychobot</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+
+          <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+
+                <!-- Show Login/Sign up if not authenticated -->
+                {% if not current_user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More/მეტი</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <button type="button" class="btn btn-warning ms-2">English</button>
-                <button type="button" class="btn btn-success ms-2">ქართული</button>
-            </div>
-        </div>
-    </nav>
+                {% else %}
+                    <!-- Show Logout if authenticated -->
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout/გამოსვლა</a></li>
+                {% endif %}
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> More/მეტი </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-warning ms-2" id="lang-en">English</button>
+            <button type="button" class="btn btn-success ms-2" id="lang-ge">ქართული</button>
+        </div>
+    </div>
+</nav>
     <!-- Main Content -->
     <div class="container mt-5">
         <!-- About Section -->
