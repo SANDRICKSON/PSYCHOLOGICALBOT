@@ -1,4 +1,4 @@
-   <nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,7 +14,8 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
                 {% else %}
-                    <!-- Show Logout if authenticated -->
+                    <!-- Show Profile and Logout if authenticated -->
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile/პროფილი</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout/გამოსვლა</a></li>
                 {% endif %}
 
@@ -30,3 +31,23 @@
         </div>
     </div>
 </nav>
+
+<style>
+    @media (max-width: 768px) {
+        #faq-title {
+            font-size: 1.5rem;
+        }
+
+        .carousel-caption h5 {
+            font-size: 1.25rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+        }
+    }
+</style>
