@@ -5,6 +5,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import sqlite3
 from forms import RegisterForm
 from extensions import app
+from werkzeug.utils import secure_filename
+import os
 
 # Rasa REST API URL (Make sure your Rasa server is running and accessible)
 RASA_LINK = "http://127.0.0.1:5005"
@@ -53,7 +55,8 @@ def create_users_table():
                         password TEXT NOT NULL,
                         birthday TEXT,
                         country TEXT,
-                        gender TEXT)''')
+                        gender TEXT,
+                        profile_image TEXT)''')
     conn.commit()
     conn.close()
 
@@ -182,6 +185,43 @@ def send_message():
         return jsonify({"response": bot_message})
     else:
         return jsonify({"error": "No message provided"}), 400
+
+# Configure the upload folder for profile images
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    if request.method == "POST":
+        if 'profile_image' not in request.files:
+            flash("No file part", "danger")
+            return redirect(url_for('profile'))
+
+        file = request.files['profile_image']
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+
+            # Save the file path in the user's profile (e.g., to a database or session)
+            conn = get_db()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET profile_image = ? WHERE id = ?", (filepath, current_user.id))
+            conn.commit()
+            conn.close()
+            flash("Profile image uploaded successfully!", "success")
+            return redirect(url_for('profile'))
+        else:
+            flash("Invalid file format. Only PNG, JPG, JPEG, GIF are allowed.", "danger")
+            return redirect(url_for('profile'))
+
+    return render_template("profile.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
