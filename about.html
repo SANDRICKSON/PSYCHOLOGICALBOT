@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/eqimis surati.jpeg" type="image/x-icon">
     <title>About Us</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        @media (max-width: 768px) {
+    #faq-title {
+        font-size: 1.5rem;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.25rem;
+    }
+
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+}
+
         body {
             background-color: #dc3545; /* bg-danger color */
             font-family: 'Arial', sans-serif;
@@ -63,45 +82,54 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Psychobot</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+
+         <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Psychobot ფსიქობოტი</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home/მთავარი მენიუ</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot/ჩეთბოტი</a></li>
+
+                <!-- Show Login/Sign up if not authenticated -->
+                {% if not current_user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login/შესვლა</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register/რეგისტრაცია</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">More/მეტი</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <button type="button" class="btn btn-warning ms-2">English</button>
-                <button type="button" class="btn btn-success ms-2">ქართული</button>
-            </div>
-        </div>
-    </nav>
+                {% else %}
+                    <!-- Show Profile and Logout if authenticated -->
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile/პროფილი</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout/გამოსვლა</a></li>
+                {% endif %}
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> More/მეტი </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('about') }}">About Us/ჩვენ შესახებ</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-warning ms-2" id="lang-en">English</button>
+            <button type="button" class="btn btn-success ms-2" id="lang-ge">ქართული</button>
+        </div>
+    </div>
+</nav>
     <!-- Main Content -->
     <div class="container mt-5">
         <!-- About Section -->
         <h2 class="text-center text-white">About Us/ჩვენ შესახებ</h2>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card text-white bg-danger-subtle mb-3">
+
+                <div class="card bg-danger text-white">
                     <div class="card-body">
                         <h5 class="card-title">Welcome to Psychobot!</h5>
-                        <p class="card-text">
-                            Psychobot is an innovative platform dedicated to helping individuals improve their mental well-being. Our goal is to provide users with valuable tools and resources that help them understand and manage their emotional and psychological health.
+                        <p>
+                             Psychobot is an innovative platform dedicated to helping individuals improve their mental well-being. Our goal is to provide users with valuable tools and resources that help them understand and manage their emotional and psychological health.
                         </p>
-                        <p class="card-text">
-                            Through our services, we aim to provide mental health support and promote well-being. Our chatbot offers various psychological advice, guidance, and coping mechanisms to users, all available at their fingertips.
+                        <p>Through our services, we aim to provide mental health support and promote well-being. Our chatbot offers various psychological advice, guidance, and coping mechanisms to users, all available at their fingertips.
                         </p>
                     </div>
                 </div>
