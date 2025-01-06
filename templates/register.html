@@ -10,22 +10,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @media (max-width: 768px) {
-    #faq-title {
-        font-size: 1.5rem;
-    }
+            #faq-title {
+                font-size: 1.5rem;
+            }
 
-    .carousel-caption h5 {
-        font-size: 1.25rem;
-    }
+            .carousel-caption h5 {
+                font-size: 1.25rem;
+            }
 
-    .carousel-caption p {
-        font-size: 1rem;
-    }
+            .carousel-caption p {
+                font-size: 1rem;
+            }
 
-    .card-title {
-        font-size: 1.1rem;
-    }
-}
+            .card-title {
+                font-size: 1.1rem;
+            }
+        }
 
         /* Background color for the entire page */
         body {
@@ -82,7 +82,6 @@
             font-size: 1.1em;
             font-weight: 600;
         }
-
     </style>
 </head>
 <body>
@@ -116,41 +115,41 @@
         <h2 class="text-center mb-4">რეგისტრაცია</h2>
 
         <!-- Flash messages for form submission feedback -->
+        {% if message %}
         <div class="alert alert-danger">
-            Your form submission failed. Please check the errors and try again.
+            {{ message }}
         </div>
+        {% endif %}
 
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card bg-white text-dark">
                     <div class="card-body">
                         <!-- Registration Form -->
-                        <form method="post">
-                            {{form.hidden_tag() }}
+                        <form method="POST" action="{{ url_for('register') }}">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username/მომხმარებლის სახელი</label>
-                                <input type="username" class="form-control" id="username" placeholder="Username/მომხმარებლის სახელი" required>
-
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Username/მომხმარებლის სახელი" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email/მეილი</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email/ჩაწერეთ თქვენი მეილი" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email/ჩაწერეთ თქვენი მეილი" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password/პაროლი</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter your password/ჩაწერეთ თქვენი პაროლი" required>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password/ჩაწერეთ თქვენი პაროლი" required>
                             </div>
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">Confirm Password/დაადასტურეთ პაროლი</label>
-                                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your password/დაადასტურეთ თქვენი პაროლი" required>
+                                <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm your password/დაადასტურეთ თქვენი პაროლი" required>
                             </div>
                             <div class="mb-3">
                                 <label for="birthday" class="form-label">Birthday/დაბადების თარიღი</label>
-                                <input type="date" class="form-control" id="birthday" required>
+                                <input type="date" name="birthday" class="form-control" id="birthday" required>
                             </div>
                             <div class="mb-3">
                                 <label for="country" class="form-label">Country/ქვეყანა</label>
-                                <select class="form-select" id="country" required>
+                                <select name="country" class="form-select" id="country" required>
                                     <option value="">Select your country/აირჩიეთ ქვეყანა</option>
                                     <option value="georgia">Georgia/საქართველო</option>
                                     <option value="usa">United States/შეერთებული შტატები</option>
@@ -169,14 +168,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="gender" class="form-label">Gender/სქესი</label>
-                                <select class="form-select" id="gender" required>
+                                <select name="gender" class="form-select" id="gender" required>
                                     <option value="">Select your gender/აირჩიეთ სქესი</option>
                                     <option value="male">Male/კაცი</option>
                                     <option value="female">Female/გოგო</option>
                                     <option value="other">Other/სხვა</option>
                                 </select>
                             </div>
-                           <button type="submit" class="btn btn-success w-100">რეგისტრაცია</button>
+                            <button type="submit" class="btn btn-success w-100">რეგისტრაცია</button>
                         </form>
                     </div>
                 </div>
