@@ -265,7 +265,6 @@
     const clearChatButton = document.getElementById("clearChatButton");
     const downloadChatButton = document.getElementById("downloadChatButton");
 
-    // Function to display messages
     function displayMessage(message, sender) {
         const messageElement = document.createElement("div");
         messageElement.classList.add("chat-message");
@@ -296,7 +295,6 @@
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Function to save chat history
     function saveChatHistory() {
         const messages = [];
         const messageElements = chatBox.getElementsByClassName("chat-message");
@@ -307,7 +305,6 @@
         localStorage.setItem("chatHistory", JSON.stringify(messages));
     }
 
-    // Function to load chat history
     function loadChatHistory() {
         const storedHistory = localStorage.getItem("chatHistory");
         if (storedHistory) {
@@ -319,16 +316,15 @@
         }
     }
 
-    // File upload handling
     uploadButton.addEventListener("click", function () {
-        fileInput.click(); // Trigger the file input click event
+        fileInput.click(); 
     });
 
     fileInput.addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (file) {
             displayMessage(`File uploaded: ${file.name}`, "user");
-            // Bot's response to file upload
+
             setTimeout(() => {
                 displayMessage("სამწუხაროდ არ ვიცი ფაილების კითხვა, მაგრამ მალე შევიძენ ამ ფუნქციას ❤️!", "bot");
                 saveChatHistory();
@@ -336,15 +332,13 @@
         }
     });
 
-    // Send message when Enter key is pressed
     messageInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
-            event.preventDefault();  // Prevent the default action (e.g., newline)
+            event.preventDefault();  
             sendMessage();
         }
     });
 
-    // Send message when the send button is clicked
     sendMessageButton.addEventListener("click", function () {
         sendMessage();
     });
@@ -357,7 +351,7 @@
         messageInput.value = "";
         saveChatHistory();
 
-        let botMessage = "";  // Initialize botMessage
+        let botMessage = "";  
 
         if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
             botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
@@ -415,37 +409,32 @@
             botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
         } else if (userMessage.toLowerCase() === "what is empathy?") {
             botMessage = "Empathy is the ability to understand and share the feelings of another person.";
-        } else if (userMessage.match(/[ა-ჰ]/)) { // Checks if the message is in Georgian
+        } else if (userMessage.match(/[ა-ჰ]/)) { 
             botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
         } else {
             botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
         }
 
-        // Simulate bot response with a delay
         setTimeout(() => {
             displayMessage(botMessage, "bot");
-            saveChatHistory();  // Save chat history after bot response
+            saveChatHistory();  
         }, 500);
     }
 
-    // Toggle emoji picker visibility
     emojiButton.addEventListener("click", function () {
         emojiPicker.classList.toggle("show");
     });
 
-    // Add emoji to message input
     function addEmoji(emoji) {
         messageInput.value += emoji;
         emojiPicker.classList.remove("show");
     }
 
-    // Clear chat history
     clearChatButton.addEventListener("click", function () {
         localStorage.removeItem("chatHistory");
         chatBox.innerHTML = '';
     });
 
-    // Download chat history as a text file
     downloadChatButton.addEventListener("click", function () {
         const chatHistory = chatBox.innerText;
         const blob = new Blob([chatHistory], { type: 'text/plain' });
@@ -455,13 +444,10 @@
         link.click();
     });
 
-    // Load chat history on page load
     window.onload = function() {
         loadChatHistory();
     };
 </script>
-
-
 
 </body>
 </html>
