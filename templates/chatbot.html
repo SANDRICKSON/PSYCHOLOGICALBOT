@@ -317,7 +317,7 @@
     }
 
     uploadButton.addEventListener("click", function () {
-        fileInput.click(); 
+        fileInput.click();
     });
 
     fileInput.addEventListener("change", function (event) {
@@ -334,7 +334,7 @@
 
     messageInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
-            event.preventDefault();  
+            event.preventDefault();
             sendMessage();
         }
     });
@@ -351,7 +351,7 @@
         messageInput.value = "";
         saveChatHistory();
 
-        let botMessage = "";  
+        let botMessage = "";
 
         if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
             botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
@@ -409,7 +409,7 @@
             botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
         } else if (userMessage.toLowerCase() === "what is empathy?") {
             botMessage = "Empathy is the ability to understand and share the feelings of another person.";
-        } else if (userMessage.match(/[ა-ჰ]/)) { 
+        } else if (userMessage.match(/[ა-ჰ]/)) {
             botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
         } else {
             botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
@@ -417,7 +417,7 @@
 
         setTimeout(() => {
             displayMessage(botMessage, "bot");
-            saveChatHistory();  
+            saveChatHistory();
         }, 500);
     }
 
