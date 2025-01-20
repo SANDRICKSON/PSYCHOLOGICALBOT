@@ -352,68 +352,58 @@
         saveChatHistory();
 
         let botMessage = "";
+if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
+    botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
+} else if (userMessage.toLowerCase() === "მადლობა") {
+    botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
+} else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
+    botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
+} else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
+    botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
+} else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
+    botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
+} else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
+    botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
+} else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
+    botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
+} else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
+    botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
+} else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
+    botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
+} else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
+    botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
+} else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
+    botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
+} else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
+    botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
+} else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
+    botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
+} else if (userMessage.toLowerCase() === "ნახვამდის") {
+    botMessage = "დროებით ❤️❤️❤️❤️❤️";
+} else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
+    botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
+} else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
+    botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
+} else if (userMessage.toLowerCase() === "რა არის მედიტაცია?") {
+    botMessage = "მედიტაცია არის პრაქტიკა, რომელიც გამოიყენება გონების დასამშვიდებლად და ცნობიერების დასაფარად.";
+} else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
+    botMessage = "Hi, how can I assist you?";
+} else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
+    botMessage = "You are welcome! It's very big honour for me to help you ❤️";
+} else if (userMessage.toLowerCase() === "what is psychology?") {
+    botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
+} else if (userMessage.toLowerCase() === "what is stress?") {
+    botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
+} else if (userMessage.toLowerCase() === "how to avoid stress?") {
+    botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
+} else if (userMessage.toLowerCase() === "what is meditation?") {
+    botMessage = "Meditation is a practice used to calm the mind and enhance awareness.";
+} else if (userMessage.match(/[ა-ჰ]/)) {
+    botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
+} else {
+    botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
+}
 
-        if (userMessage.toLowerCase() === "გამარჯობა" || userMessage.toLowerCase() === "სალამი" || userMessage.toLowerCase() === "ბარო" || userMessage.toLowerCase() === "ხელი") {
-            botMessage = "გამარჯობა! რით შემიძლია დაგეხმაროთ?";
-        } else if (userMessage.toLowerCase() === "მადლობა") {
-            botMessage = "არაფრის! ჩემთვის დიდი პატივია თუ დაგეხმარეთ ❤️";
-        } else if (userMessage.toLowerCase() === "რა არის ფსიქოლოგია?") {
-            botMessage = "ფსიქოლოგია არის მეცნიერება, რომელიც შეისწავლის ადამიანის ქცევას, აზროვნებას, ემოციებს, პიროვნებას და მეხსიერებას...";
-        } else if (userMessage.toLowerCase() === "რა არის სტრესი?") {
-            botMessage = "სტრესი არის ორგანიზმის ფიზიკური და ემოციური რეაქცია, რომელიც წარმოიშობა სხვადასხვა გამოწვევებზე ან სირთულეებზე.";
-        } else if (userMessage.toLowerCase() === "როგორ მოვერიდოთ სტრესს?") {
-            botMessage = "სტრესის თავიდან ასაცილებლად კარგი იქნება ფიზიკური აქტივობა, ჯანსაღი კვება, ძილის რეჟიმის დაცვა და რეგულარული დასვენება.";
-        } else if (userMessage.toLowerCase() === "როგორ გავაუმჯობესო ჩემი ემოციური მდგომარეობა?") {
-            botMessage = "შესაძლებელია მედიტაციის, პოზიტიური აზროვნების, ჰობიზე დროის დახარჯვის და საჭიროების შემთხვევაში პროფესიონალთან კონსულტაციის დახმარებით.";
-        } else if (userMessage.toLowerCase() === "რა არის თვითშეფასება?") {
-            botMessage = "თვითშეფასება არის საკუთარი თავისადმი პიროვნული დამოკიდებულება, რაც გულისხმობს, როგორ აღიქვამთ საკუთარ ღირებულებას.";
-        } else if (userMessage.toLowerCase() === "რა არის დეპრესია?") {
-            botMessage = "დეპრესია არის ემოციური მდგომარეობა, რომელიც ჩნდება ხანგრძლივი სევდას, იმედგაცრუებასა და ენერგიის ნაკლებობასთან ერთად.";
-        } else if (userMessage.toLowerCase() === "როგორ გავუმკლავდეთ დეპრესიას?") {
-            botMessage = "დეპრესიის მართვისთვის მნიშვნელოვანი ნაბიჯებია ფიზიკური აქტივობა, მედიტაცია, პოზიტიური სოციალური კონტაქტი და საჭიროების შემთხვევაში ფსიქოთერაპია.";
-        } else if (userMessage.toLowerCase() === "რა არის სუიციდი?") {
-            botMessage = "სუიციდი ადამიანის ცხოვრების დასრულების სცდობაა, რაც ხშირად ემოციურ ტკივილთან და უძლურებასთან დაკავშირებულია.";
-        } else if (userMessage.toLowerCase() === "რა არის ემპათია?") {
-            botMessage = "ემპათია არის უნარი, იგრძნო და გაიაზრო სხვისი ემოციები და გრძნობები.";
-        } else if (userMessage.toLowerCase() === "რა არის სიყვარული?") {
-            botMessage = "სიყვარული არის ძლიერი ემოცია, რომელიც ადამიანს აკავშირებს სხვა პიროვნებასთან, დამყარებულ ურთიერთობებსა და ახლობელ ადამიანებთან.";
-        } else if (userMessage.toLowerCase() === "რა არის მეგობრობა?") {
-            botMessage = "მეგობრობა არის ურთიერთობა, რომელიც შექმნილია ნდობაზე, მხარდაჭერაზე და ურთიერთპატივისცემაზე.";
-        } else if (userMessage.toLowerCase() === "ნახვამდის") {
-            botMessage = "დროებით ❤️❤️❤️❤️❤️";
-        } else if (userMessage.toLowerCase() === "რა არის წარმატება?") {
-            botMessage = "წარმატება განსხვავებული კონტექსტით შეიძლება ჰქონდეს მნიშვნელობა, მაგრამ ხშირად ის უკავშირდება მიზნების მიღწევას და პიროვნულ რაზღნულს.";
-        } else if (userMessage.toLowerCase() === "რა არის ბალანსი ცხოვრებაში?") {
-            botMessage = "ბალანსი ცხოვრებაში გულისხმობს დროსა და ენერგიის განაწილებას სხვადასხვა სფეროებში, როგორიცაა სამუშაო, პირადი ცხოვრება, ჯანმრთელობა და ჰობი.";
-        } else if (userMessage.toLowerCase() === "hi" || userMessage.toLowerCase() === "hey" || userMessage.toLowerCase() === "hello") {
-            botMessage = "Hi, how can I assist you?";
-        } else if (userMessage.toLowerCase() === "thank you" || userMessage.toLowerCase() === "thanks") {
-            botMessage = "You are welcome! It's very big honour for me to help you ❤️";
-        } else if (userMessage.toLowerCase() === "goodbye" || userMessage.toLowerCase() === "bye" || userMessage.toLowerCase() === "see you" || userMessage.toLowerCase() === "take care" || userMessage.toLowerCase() === "later") {
-            botMessage = "Bye, see you soon ❤️";
-        } else if (userMessage.toLowerCase() === "what is psychology?") {
-            botMessage = "Psychology is the scientific study of behavior, thought processes, emotions, personality, and memory.";
-        } else if (userMessage.toLowerCase() === "what is stress?") {
-            botMessage = "Stress is a physical and emotional response of the body to challenges or difficulties.";
-        } else if (userMessage.toLowerCase() === "how to avoid stress?") {
-            botMessage = "To avoid stress, physical activity, healthy eating, good sleep habits, and regular rest are helpful.";
-        } else if (userMessage.toLowerCase() === "how to improve my emotional state?") {
-            botMessage = "Meditation, positive thinking, spending time on hobbies, and consulting a professional if needed can help.";
-        } else if (userMessage.toLowerCase() === "what is self-esteem?") {
-            botMessage = "Self-esteem is how one perceives their own value and worth.";
-        } else if (userMessage.toLowerCase() === "what is depression?") {
-            botMessage = "Depression is an emotional state that involves long-lasting sadness, hopelessness, and a lack of energy.";
-        } else if (userMessage.toLowerCase() === "how to cope with depression?") {
-            botMessage = "To cope with depression, physical activity, meditation, positive social interaction, and therapy can be helpful.";
-        } else if (userMessage.toLowerCase() === "what is suicide?") {
-            botMessage = "Suicide is the act of attempting to end one's life, often related to emotional pain and a sense of helplessness.";
-        } else if (userMessage.toLowerCase() === "what is empathy?") {
-            botMessage = "Empathy is the ability to understand and share the feelings of another person.";
-        } else if (userMessage.match(/[ა-ჰ]/)) {
-            botMessage = "სამწუხაროდ თქვენს კითხვაზე პასუხი არ მაქვს, თუმცა გპირდებით, რომ მალე გიპასუხებთ ❤️!";
-        } else {
-            botMessage = "Sorry, I don't have an answer to that question, but I promise I'll get back to you soon ❤️!";
-        }
 
         setTimeout(() => {
             displayMessage(botMessage, "bot");
